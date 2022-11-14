@@ -1,36 +1,78 @@
 import React from 'react'
+import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
+import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
+import {FormularioPersonas} from './FormularioPersonas'
 
 export const Section2 = () => {
+    const [personas,setPersonas] = useState([])
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const modificar = ()=>{
+        handleShow()
+    }
+    const eliminar = ()=>{
+        alert("ELiminando")
+    }
+
+
   return (
     <div className='row m-1' >
+        <FormularioPersonas setPersonas={setPersonas} personas={personas}/>
+        
+    <Table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+                <th>Correo</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {personas.map(({nombre,apellido,edad,email})=>
+                (
+                <tr>
+                    <td>x</td>
+                    <td>{nombre}</td>
+                    <td>{apellido}</td>
+                    <td>{edad}</td>
+                    <td>{email}</td>
+                    <td><Button variant="warning" onClick={modificar}>Modificar</Button>
+                        <Button variant="danger" onClick={eliminar}>Eliminar</Button>
+                    </td>
+                    
+                </tr>
+                )
+            )}
+        </tbody>
+    </Table>
 
-        <Form>
-            <Form.Group>
-                <Form.Label>Nombre: </Form.Label>
-                <Form.Control type="text" placeholder="Ingrese su nombre" />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Apellido: </Form.Label>
-                <Form.Control type="text" placeholder="Ingrese su apellido" />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Edad: </Form.Label>
-                <Form.Control type="number" placeholder="Ingrese su edad" />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Correo: </Form.Label>
-                <Form.Control type="email" placeholder="Ingrese su correo" />
-            </Form.Group>
-            <Row>
-                
-                    <Button className='col-md-2 offset-md-5 ' >Registrar</Button>
-                
-            </Row>
-        </Form>
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <FormularioPersonas/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </div>
   )
 }

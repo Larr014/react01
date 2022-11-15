@@ -10,12 +10,19 @@ import {FormularioPersonas} from './FormularioPersonas'
 export const Section2 = () => {
     const [personas,setPersonas] = useState([])
     const [show, setShow] = useState(false);
-
+    const [persona,setPersona] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const modificar = ()=>{
+    const modificar = (nombre,apellido,edad,email)=>{
+        setPersona({
+          'nombre':nombre,
+          'apellido':apellido,
+          'edad':edad,
+          'email':email
+        })
         handleShow()
+        
     }
     const eliminar = ()=>{
         alert("ELiminando")
@@ -24,7 +31,7 @@ export const Section2 = () => {
 
   return (
     <div className='row m-1' >
-        <FormularioPersonas setPersonas={setPersonas} personas={personas}/>
+        <FormularioPersonas setPersonas={setPersonas} personas={personas} visible={true} persona=""/>
         
     <Table>
         <thead>
@@ -38,15 +45,15 @@ export const Section2 = () => {
             </tr>
         </thead>
         <tbody>
-            {personas.map(({nombre,apellido,edad,email})=>
+            {personas.map(({id,nombre,apellido,edad,email})=>
                 (
                 <tr>
-                    <td>x</td>
+                    <td>{id}</td>
                     <td>{nombre}</td>
                     <td>{apellido}</td>
                     <td>{edad}</td>
                     <td>{email}</td>
-                    <td><Button variant="warning" onClick={modificar}>Modificar</Button>
+                    <td><Button variant="warning" onClick={()=>{modificar(nombre,apellido,edad,email)}}>Modificar</Button>
                         <Button variant="danger" onClick={eliminar}>Eliminar</Button>
                     </td>
                     
@@ -61,7 +68,7 @@ export const Section2 = () => {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <FormularioPersonas/>
+            <FormularioPersonas visible={false} persona={persona} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

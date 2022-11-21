@@ -11,11 +11,26 @@ export const Section2 = () => {
     const [personas,setPersonas] = useState([])
     const [show, setShow] = useState(false);
     const [persona,setPersona] = useState();
+    const [accion,setAccion] = useState(false);
+    
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const modificar = (nombre,apellido,edad,email)=>{
+    const handleUpdate = ()=>{
+      let ps = personas.filter(p=>p.id!==persona.id)
+      setPersonas([...ps,persona])
+      console.log(personas)
+    }
+    const handleDelete = ()=>{
+      let ps = personas.filter(p=>p.id!==persona.id)
+      setPersonas([...ps])
+      
+    }
+
+    const modificar = (id,nombre,apellido,edad,email)=>{
+      setAccion(false)
         setPersona({
+          'id':id,
           'nombre':nombre,
           'apellido':apellido,
           'edad':edad,
@@ -25,7 +40,8 @@ export const Section2 = () => {
         
     }
     const eliminar = ()=>{
-        alert("ELiminando")
+      setAccion(true)
+      handleShow()
     }
 
 
@@ -53,7 +69,7 @@ export const Section2 = () => {
                     <td>{apellido}</td>
                     <td>{edad}</td>
                     <td>{email}</td>
-                    <td><Button variant="warning" onClick={()=>{modificar(nombre,apellido,edad,email)}}>Modificar</Button>
+                    <td><Button variant="warning" onClick={()=>{modificar(id,nombre,apellido,edad,email)}}>Modificar</Button>
                         <Button variant="danger" onClick={eliminar}>Eliminar</Button>
                     </td>
                     
@@ -68,15 +84,23 @@ export const Section2 = () => {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <FormularioPersonas visible={false} persona={persona} />
+            <FormularioPersonas visible={false} persona={persona} setPersona={setPersona}/>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          {
+            !accion?
+            <Button variant="warning" onClick={handleUpdate}>
+            Modificar
+          </Button>:
+          <Button variant="danger" onClick={handleDelete}>
+            Eliminar 
           </Button>
+
+          }
+          
         </Modal.Footer>
       </Modal>
 

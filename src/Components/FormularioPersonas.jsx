@@ -19,26 +19,31 @@ export const FormularioPersonas = (props) => {
             'email':email
         }])        
         
-        
     }
     
+    const handleUpdate = (campo,valor)=>{
+        
+        
+        props.setPersona({...props.persona,[campo]:valor})
+         
+    }
   return (
     <Form>
             <Form.Group>
                 <Form.Label>Nombre: </Form.Label>
-                <Form.Control type="text" placeholder="Ingrese su nombre" onChange={(e)=>{setNombre(e.target.value)}} value={nombre}/>
+                <Form.Control type="text" name="nombre" placeholder="Ingrese su nombre" onChange={(e)=>{setNombre(e.target.value); handleUpdate(e.target.name,e.target.value)}} value={nombre}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Apellido: </Form.Label>
-                <Form.Control type="text" placeholder="Ingrese su apellido" onChange={(e)=>{setApellido(e.target.value)}}  value={apellido}/>
+                <Form.Control type="text" name="apellido" placeholder="Ingrese su apellido" onChange={(e)=>{setApellido(e.target.value); handleUpdate(e.target.name,e.target.value)}}  value={apellido}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Edad: </Form.Label>
-                <Form.Control type="number" placeholder="Ingrese su edad" onChange={(e)=>{setEdad(e.target.value)}} value={edad}/>
+                <Form.Control type="number" name="edad" placeholder="Ingrese su edad" onChange={(e)=>{setEdad(e.target.value); handleUpdate(e.target.name,e.target.value)}} value={edad}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Correo: </Form.Label>
-                <Form.Control type="email" placeholder="Ingrese su correo" onChange={(e)=>{setEmail(e.target.value)}} value={email}/>
+                <Form.Control type="email" name="email" placeholder="Ingrese su correo" onChange={(e)=>{setEmail(e.target.value); handleUpdate(e.target.name,e.target.value)}} value={email}/>
             </Form.Group>
             <Row>
                                     
